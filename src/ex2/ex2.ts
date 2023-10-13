@@ -11,6 +11,19 @@ const lista: Pessoa[] = [
   { id: 4, nome: "Nicolau Copérnico", bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar." }
 ];
 
+/**
+ * Cria uma lista não ordenada (ul).
+ *
+ * @param lista - O vetor a ser percorrido.
+ * @param ul - O elemento <ul> a ser formado.
+ *
+ */
+const criaLista = (lista: Pessoa[], ul: HTMLUListElement) => lista.forEach((pessoa: Pessoa) => {
+  const li = document.createElement('li');
+  li.textContent = `${pessoa.id}. ${pessoa.nome}`;
+  ul.appendChild(li);
+});
+
 /* 
  * Paradigma funcional
  */
@@ -25,20 +38,26 @@ const removePessoa = (id: number, lista: Pessoa[]) => lista.filter((pessoa: Pess
 
 const alteraPessoa = (id: number, lista: Pessoa[], nome: string, bio: string) => lista.map((pessoa: Pessoa) => (pessoa.id === id) ? { id: id, nome: nome, bio: bio } : pessoa);
 
-const imprimeLista = (lista: Pessoa[]) => lista.forEach((pessoa: Pessoa) => console.log(`${pessoa.id}. ${pessoa.nome}`));
+// Criação de elementos HTML e demonstração das funções declarativas
+let h2 = document.createElement('h2');
+let para1 = document.createElement('p');
+let para2 = document.createElement('p');
+let para3 = document.createElement('p');
+let para4 = document.createElement('p');
+let ul = document.createElement('ul');
 
-console.log('1. Demonstracao funcional');
-console.log('-------------------------');
-console.log(`a) ${acessarBio(2, lista, buscaPorId)}`);
-console.log(`b) ${acessarNome(2, lista, buscaPorId)}`);
+h2.textContent = '1. Demonstração funcional';
+para1.textContent = `a) ${acessarBio(2, lista, buscaPorId)}`;
+para2.textContent = `b) ${acessarNome(2, lista, buscaPorId)}`;
 
 let aux: Pessoa[] = removePessoa(4, lista);
-console.log(`\nc) Pessoa 4 removida. Lista atualizada:`);
-imprimeLista(aux);
+para3.textContent = `c) Pessoa 4 removida`;
 
 aux = alteraPessoa(3, aux, 'Brendan Eich', 'Brendan Eich é um programador de computadores e executivo de tecnologia americano. Ele criou a linguagem de programação JavaScript e foi cofundador do projeto Mozilla, da Mozilla Foundation e da Mozilla Corporation');
-console.log(`\nd) Pessoa 3 alterada. Lista atualizada:`);
-imprimeLista(aux);
+para4.textContent = `d) Pessoa 3 alterada. Lista atualizada:`;
+criaLista(aux, ul);
+
+document.body.append(h2, para1, para2, para3, para4, ul);
 
 /* 
  * Paradigma imperativo
@@ -61,22 +80,23 @@ function alteraPessoaImp(id: number, nome: string, bio: string): void {
   lista[id - 1].bio = bio;
 }
 
-function imprimeListaImp(): void {
-  for (const pessoa of lista) {
-    console.log(`${pessoa.id}. ${pessoa.nome}`);
-  }
-}
+// Criação de elementos HTML e demonstração das funções imperativas
+h2 = document.createElement('h2');
+para1 = document.createElement('p');
+para2 = document.createElement('p');
+para3 = document.createElement('p');
+para4 = document.createElement('p');
+ul = document.createElement('ul');
 
-console.log('\n2. Demonstracao imperativo');
-console.log('--------------------------');
-console.log(`a) ${acessarBioImp(3)}`);
-console.log(`b) ${acessarNomeImp(3)}`);
+h2.textContent = '2. Demonstração imperativo';
+para1.textContent = `a) ${acessarBioImp(1)}`;
+para2.textContent = `b) ${acessarNomeImp(1)}`;
 
 removePessoaImp(2);
-console.log(`\nc) Pessoa 2 removida. Lista atualizada:`);
-imprimeListaImp();
+para3.textContent = `c) Pessoa 2 removida.`;
 
 alteraPessoaImp(1, 'Brendan Eich', 'Brendan Eich é um programador de computadores e executivo de tecnologia americano. Ele criou a linguagem de programação JavaScript e foi cofundador do projeto Mozilla, da Mozilla Foundation e da Mozilla Corporation');
-console.log(`\nd) Pessoa 1 alterada. Lista atualizada:`);
-imprimeListaImp();
+para4.textContent = `d) Pessoa 1 alterada. Lista atualizada:`;
+criaLista(lista, ul);
 
+document.body.append(h2, para1, para2, para3, para4, ul);
